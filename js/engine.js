@@ -48,6 +48,16 @@ var Engine = (function(global) {
         update(dt);
         render();
 
+        if (dead) {
+            var death = document.createElement('div');
+            death.innerHTML = "You Die!";
+            document.body.appendChild(death);
+            setTimeout(function() {
+                document.body.removeChild(document.getElementsByTagName('div')[0]);
+            }, 500);
+            player.reset();
+        }
+
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
