@@ -48,7 +48,7 @@ var Engine = (function(global) {
         update(dt);
         render();
 
-        if (dead) {
+        if (player.dead) {
             var death = document.createElement('div');
             death.innerHTML = "You Die!";
             document.body.appendChild(death);

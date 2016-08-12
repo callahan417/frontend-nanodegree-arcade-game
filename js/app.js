@@ -1,8 +1,8 @@
 //global variable used to test if player has lost
-var dead = false;
+//var dead = false;
 
 // Enemies our player must avoid
-var Enemy = function(x, y, speed) {
+var Enemy = function(x, y, speed, left) {
     // Enemy x and y positions
     this.x = x;
     this.y = y;
@@ -17,6 +17,9 @@ var Enemy = function(x, y, speed) {
     this.left = 5;
     this.right = 96;
 
+    //Boolean variable to indicate whether the enemy moves to the left
+    this.left = left;
+
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -25,14 +28,24 @@ var Enemy = function(x, y, speed) {
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
+    // this.speed is multipled by the dt parameter
+    // to ensure the game runs at the same speed for
     // all computers.
-    if (this.x + this.speed * dt <= 550) {
-        this.x += this.speed * dt;
+    if (this.left) {
+        if (this.x - this.speed * dt > -90) {
+            this.x -= this.speed * dt;
+        }
+        else {
+            this.x = 550;
+        }
     }
     else {
-        this.x = -90;
+        if (this.x + this.speed * dt <= 550) {
+            this.x += this.speed * dt;
+        }
+        else {
+            this.x = -90;
+        }
     }
 };
 
@@ -58,15 +71,18 @@ var Player = function() {
     //(factors out transparent space)
     this.top = 64;
     this.bottom = 139;
-    this.left = 16;
-    this.right = 84;
+    this.left = 20;//added 4
+    this.right = 80;//subtracted 4
+
+    // variable used to test if player has lost
+    this.dead = false;
 }
 
 //Move player back to the starting position
 Player.prototype.reset = function() {
     this.x = 202;
     this.y = 415;
-    dead = false;
+    this.dead = false;
 };
 
 // Draw the player on the screen
@@ -89,7 +105,7 @@ Player.prototype.update = function() {
                 enemy.y + enemy.bottom < player.y + player.top)) {
             //alert("A bug got you! You're dead! You lose the game!");
             //player.reset();
-            dead = true;
+            player.dead = true;
             return;
         }
     });
@@ -123,7 +139,8 @@ Player.prototype.handleInput = function(move){
 
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [new Enemy(0, 150, 60), new Enemy(0, 60, 120), new Enemy(200, 150, 60)];
+var allEnemies = [new Enemy(0, 150, 60, false), new Enemy(0, 60, 120, false),
+                     new Enemy(200, 150, 60, false), new Enemy(0, 230, 225, true)];
 var player = new Player();
 
 // Listens for key presses and send the keys to the
