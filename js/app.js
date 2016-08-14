@@ -1,6 +1,3 @@
-//global variable used to test if player has lost
-//var dead = false;
-
 // Enemies our player must avoid
 var Enemy = function(x, y, speed, left) {
     // Enemy x and y positions
@@ -10,12 +7,12 @@ var Enemy = function(x, y, speed, left) {
     //The amount by which each enemy moves during each cycle
     this.speed = speed;
 
-    //distances of each actual side of sprite from the top left:
+    //distances of each actual side of sprite from the top left of the image:
     //(factors out transparent space)
     this.top = 77;
     this.bottom = 144;
-    this.left = 5;
-    this.right = 96;
+    this.left = 10;
+    this.right = 91;
 
     //Boolean variable to indicate whether the enemy moves to the left
     this.left = left;
@@ -67,12 +64,12 @@ var Player = function() {
     this.stepX = 50;
     this.stepY = 44;
 
-    //distances of each actual side of sprite from the top left:
+    //distances of each actual side of sprite from the top left of the image:
     //(factors out transparent space)
     this.top = 64;
     this.bottom = 139;
-    this.left = 20;//added 4
-    this.right = 80;//subtracted 4
+    this.left = 20;
+    this.right = 80;
 
     // variable used to test if player has lost
     this.dead = false;
@@ -103,8 +100,6 @@ Player.prototype.update = function() {
                 enemy.y + enemy.top > player.y + player.bottom ||
                 enemy.x + enemy.right < player.x + player.left ||
                 enemy.y + enemy.bottom < player.y + player.top)) {
-            //alert("A bug got you! You're dead! You lose the game!");
-            //player.reset();
             player.dead = true;
             return;
         }
@@ -140,7 +135,7 @@ Player.prototype.handleInput = function(move){
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [new Enemy(0, 150, 60, false), new Enemy(0, 60, 120, false),
-                     new Enemy(200, 150, 60, false), new Enemy(0, 230, 225, true)];
+                     new Enemy(250, 150, 60, false), new Enemy(0, 230, 225, true)];
 var player = new Player();
 
 // Listens for key presses and send the keys to the
