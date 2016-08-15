@@ -48,13 +48,27 @@ var Engine = (function(global) {
         update(dt);
         render();
 
+        // if player has won, show win message and then reset
+        if (player.won) {
+            var winMsg = document.createElement('div');
+            winMsg.innerHTML = "You made it to the water! You win!";
+            winMsg.style.fontSize = "30px";
+            document.body.appendChild(winMsg);
+            setTimeout(function() {
+                document.body.removeChild(document.getElementsByTagName('div')[0]);
+            }, 1500);
+            player.reset();
+        }
+
+        // if player is dead, show death message and then reset
         if (player.dead) {
             var death = document.createElement('div');
             death.innerHTML = "You Die!";
+            death.style.fontSize = "30px";
             document.body.appendChild(death);
             setTimeout(function() {
                 document.body.removeChild(document.getElementsByTagName('div')[0]);
-            }, 500);
+            }, 1500);
             player.reset();
         }
 

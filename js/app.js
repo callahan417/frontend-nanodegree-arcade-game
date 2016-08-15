@@ -71,7 +71,10 @@ var Player = function() {
     this.left = 20;
     this.right = 80;
 
-    // variable used to test if player has lost
+    // variable used to indicate if player has won
+    this.won = false;
+
+    // variable used to indicate if player has lost
     this.dead = false;
 }
 
@@ -79,6 +82,7 @@ var Player = function() {
 Player.prototype.reset = function() {
     this.x = 202;
     this.y = 415;
+    this.won = false;
     this.dead = false;
 };
 
@@ -90,10 +94,14 @@ Player.prototype.render = function() {
 //Check the player for winning and losing conditions
 Player.prototype.update = function() {
     //check for a win (player reached the water)
-    if (this.y <= -25) {
-        alert("Congratulations! You made it to the water. You win the game!");
-        this.reset();
+    if (this.y <= 0) {//-25
+        //alert("Congratulations! You made it to the water. You win the game!");
+        //this.reset();
+        this.y = -10;
+        this.won = true;
+        return;
     }
+
     //check for collisions with enemies
     allEnemies.forEach(function(enemy) {
         if (!(enemy.x + enemy.left > player.x + player.right ||
