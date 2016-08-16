@@ -94,7 +94,7 @@ Player.prototype.render = function() {
 //Check the player for winning and losing conditions
 Player.prototype.update = function() {
     //check for a win (player reached the water)
-    if (this.y <= 0) {//-25
+    if (this.y <= 0) {
         //alert("Congratulations! You made it to the water. You win the game!");
         //this.reset();
         this.y = -10;
@@ -104,14 +104,14 @@ Player.prototype.update = function() {
 
     //check for collisions with enemies
     allEnemies.forEach(function(enemy) {
-        if (!(enemy.x + enemy.left > player.x + player.right ||
-                enemy.y + enemy.top > player.y + player.bottom ||
-                enemy.x + enemy.right < player.x + player.left ||
-                enemy.y + enemy.bottom < player.y + player.top)) {
-            player.dead = true;
+        if (!(enemy.x + enemy.left > this.x + this.right ||
+                enemy.y + enemy.top > this.y + this.bottom ||
+                enemy.x + enemy.right < this.x + this.left ||
+                enemy.y + enemy.bottom < this.y + this.top)) {
+            this.dead = true;
             return;
         }
-    });
+    }, this);
 };
 
 //Handle keyboard input and move player accordingly (i.e. change player x and y positions)
