@@ -29,6 +29,7 @@ Enemy.prototype.update = function(dt) {
     // to ensure the game runs at the same speed for
     // all computers.
     if (this.left) {
+        //change position of left-moving Enemies
         if (this.x - this.speed * dt > -90) {
             this.x -= this.speed * dt;
         }
@@ -37,6 +38,7 @@ Enemy.prototype.update = function(dt) {
         }
     }
     else {
+        //change position of right-moving Enemies
         if (this.x + this.speed * dt <= 550) {
             this.x += this.speed * dt;
         }
@@ -93,15 +95,6 @@ Player.prototype.render = function() {
 
 //Check the player for winning and losing conditions
 Player.prototype.update = function() {
-    //check for a win (player reached the water)
-    if (this.y <= 0) {
-        //alert("Congratulations! You made it to the water. You win the game!");
-        //this.reset();
-        this.y = -10;
-        this.won = true;
-        return;
-    }
-
     //check for collisions with enemies
     allEnemies.forEach(function(enemy) {
         if (!(enemy.x + enemy.left > this.x + this.right ||
@@ -137,6 +130,12 @@ Player.prototype.handleInput = function(move){
             if (this.x + this.stepX <= 425) {
                 this.x += this.stepX;
             }
+    }
+
+    //check for a win (player reached the water)
+    if (this.y <= 0) {
+        this.y = -10;
+        this.won = true;
     }
 };
 
